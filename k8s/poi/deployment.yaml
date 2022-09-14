@@ -11,3 +11,12 @@ spec:
     metadata:
       labels:
         app: tripsinsights-poi
+    volumeMounts:
+    - name: foo
+      mountPath: "/secrets"
+      readOnly: true
+  volumes:
+  - name: secrets-volume
+    secret:
+      secretName: secrets
+      optional: false # default setting; "mysecret" must exist
