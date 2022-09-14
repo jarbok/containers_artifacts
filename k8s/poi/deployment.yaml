@@ -28,14 +28,10 @@ spec:
         env:
         - name: WEB_SERVER_BASE_URI
           value: 'http://0.0.0.0'
-        - name: WEB_PORT
-          value: '8080'
         - name: ASPNETCORE_ENVIRONMENT
           value: 'Production'
         - name: SQL_USER
           value: 'sqladmin'
-        - name: SQL_PASSWORD
-          value: 'StrongPassw0rd'
         - name: SQL_SERVER
           value: 'sqlserverlpg2295.database.windows.net'
         envFrom:
