@@ -1,21 +1,46 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: tripsinsights-trips
+  name: trips
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: tripsinsights-trips
+      app: trips
   template:
     metadata:
       labels:
-        app: tripsinsights-trips
+        app: trips
     spec:
       nodeSelector:
         "kubernetes.io/os": linux
       containers:
-      - name: trips
-        image: registrylpg2295.azurecr.io/tripinsights/trips:1.0
+      - image: registrylpg2295.azurecr.io/tripinsights/trips:1.0
+        imagePullPolicy: Always
+        name: trips
         ports: 
         - containerPort: 80
+          name: http
+          protocol: TCP
+        env:
+        - name: SQL_USER
+          value: 'sqladmin'
+        - name: SQL_SERVER
+          value: 'sqlserverlpg2295.database.windows.net'
+        envFrom:
+        - secretRef:
+            name: sql
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: trips-service
+spec:
+  type: ClusterIP
+  selector:
+    app: trips
+  ports:
+  - protocol: TCP
+    name: http
+    port: 80
+    targetPort: 80

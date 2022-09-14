@@ -14,16 +14,15 @@ spec:
       labels:
         app: poi
     spec:
+      nodeSelector:
+        "kubernetes.io/os": linux
       containers:
-      - image: 'registrylpg2295.azurecr.io/tripinsights/poi:1.0'
+      - image: registrylpg2295.azurecr.io/tripinsights/poi:1.0
         imagePullPolicy: Always
         name: poi
         ports:
         - containerPort: 80
           name: http
-          protocol: TCP
-        - containerPort: 443
-          name: https
           protocol: TCP
         env:
         - name: WEB_SERVER_BASE_URI
@@ -41,7 +40,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: poi
+  name: poi-service
 spec:
   type: ClusterIP
   selector:
@@ -51,7 +50,3 @@ spec:
     name: http
     port: 80
     targetPort: 80
-  - protocol: TCP
-    name: https
-    port: 443
-    targetPort: 443
