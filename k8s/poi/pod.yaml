@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: tripsinsights-poi
+spec:
+  containers:
+  - name: tripsinsights-poi
+    image: registrylpg2295.azurecr.io/tripinsights/poi:1.0
+    resources:
+      requests:
+        cpu: "2"
+        memory: "200Mi"
+    volumeMounts:
+    - name: secrets-volume-mount
+      mountPath: "/secrets"
+      readOnly: true
+  volumes:
+  - name: secrets-volume
+    secret:
+      secretName: sql_password
+      optional: false # default setting; "mysecret" must exist
