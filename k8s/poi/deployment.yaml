@@ -11,8 +11,15 @@ spec:
     metadata:
       labels:
         app: tripsinsights-poi
+    nodeSelector:
+      "kubernetes.io/os": linux
+    containers:
+    - name: tripsinsights-poi
+      image: registrylpg2295.azurecr.io/tripinsights/poi:1.0
+      ports:
+      - containerPort: 80
     volumeMounts:
-    - name: foo
+    - name: secrets-volume-mount
       mountPath: "/secrets"
       readOnly: true
   volumes:
