@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tripsinsights-trips
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tripsinsights-trips
+  template:
+    metadata:
+      labels:
+        app: tripsinsights-trips
+    spec:
+      nodeSelector:
+        "kubernetes.io/os": linux
+      containers:
+      - name: trips
+        image: registrylpg2295.azurecr.io/tripinsights/trips:1.0
+        ports: 
+        - containerPort: 80
