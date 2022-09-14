@@ -22,9 +22,11 @@ spec:
             - containerPort: 80
               name: http
               protocol: TCP
-            - containerPort: 443
-              name: https
-              protocol: TCP
+          env:
+            - name: TRIPS_API_ENDPOINT
+              value: "http://trips-service"
+            - name: USERPROFILE_API_ENDPOINT
+              value: "http://userprofile-service"
 ---
 apiVersion: v1
 kind: Service
