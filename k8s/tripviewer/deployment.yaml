@@ -1,21 +1,41 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: tripsinsights-tripviewer
+  name: tripviewer
+  labels:
+    deploy: tripviewer
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: tripsinsights-tripviewer
+      app: tripviewer
   template:
     metadata:
       labels:
-        app: tripsinsights-tripviewer
+        app: tripviewer
     spec:
-      nodeSelector:
-        "kubernetes.io/os": linux
       containers:
-      - name: trips
-        image: registrylpg2295.azurecr.io/tripinsights/tripviewer:1.0
-        ports: 
-        - containerPort: 80
+        - image: "registrylpg2295.azurecr.io/tripinsights/tripviewer:1.0"
+          imagePullPolicy: Always
+          name: tripviewer
+          ports:
+            - containerPort: 80
+              name: http
+              protocol: TCP
+            - containerPort: 443
+              name: https
+              protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tripviewer-service
+spec:
+  type: ClusterIP
+  selector:
+    app: tripviewer
+  ports:
+    - protocol: TCP
+      name: http
+      port: 80
+      targetPort: 80
