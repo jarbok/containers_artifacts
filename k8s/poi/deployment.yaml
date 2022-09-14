@@ -1,29 +1,61 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: tripsinsights-poi
+  name: poi
+  labels:
+    deploy: poi
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: tripsinsights-poi
+      app: poi
   template:
     metadata:
       labels:
-        app: tripsinsights-poi
-    nodeSelector:
-      "kubernetes.io/os": linux
-    containers:
-    - name: tripsinsights-poi
-      image: registrylpg2295.azurecr.io/tripinsights/poi:1.0
-      ports:
-      - containerPort: 80
-    volumeMounts:
-    - name: secrets-volume-mount
-      mountPath: "/secrets"
-      readOnly: true
-  volumes:
-  - name: secrets-volume
-    secret:
-      secretName: secrets
-      optional: false # default setting; "mysecret" must exist
+        app: poi
+    spec:
+      containers:
+      - image: 'registrylpg2295.azurecr.io/tripinsights/poi:1.0'
+        imagePullPolicy: Always
+        name: poi
+        ports:
+        - containerPort: 80
+          name: http
+          protocol: TCP
+        - containerPort: 443
+          name: https
+          protocol: TCP
+        env:
+        - name: WEB_SERVER_BASE_URI
+          value: 'http://0.0.0.0'
+        - name: WEB_PORT
+          value: '8080'
+        - name: ASPNETCORE_ENVIRONMENT
+          value: 'Production'
+        - name: SQL_USER
+          value: 'sqladmin'
+        - name: SQL_PASSWORD
+          value: 'StrongPassw0rd'
+        - name: SQL_SERVER
+          value: 'sqlserverlpg2295.database.windows.net'
+        envFrom:
+        - secretRef:
+            name: sql
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: poi
+spec:
+  type: ClusterIP
+  selector:
+    app: poi
+  ports:
+  - protocol: TCP
+    name: http
+    port: 80
+    targetPort: 80
+  - protocol: TCP
+    name: https
+    port: 443
+    targetPort: 443
