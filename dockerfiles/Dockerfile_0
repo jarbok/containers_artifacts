@@ -15,7 +15,8 @@ ENV PORT=80 \
     SQL_USER="sqladmin" \
     SQL_PASSWORD="changeme" \
     SQL_SERVER="changeme.database.windows.net" \
-    SQL_DBNAME="mydrivingDB"
+    SQL_DBNAME="mydrivingDB" \
+    CONFIG_FILES_PATH="/secrets"
 
 # Metadata as defined in OCI image spec annotations - https://github.com/opencontainers/image-spec/blob/master/annotations.md
 LABEL org.opencontainers.image.title="Trip Insights - User (Java) API" \
