@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: tripsinsights-user-java
+  name: userjava
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: tripsinsights-user-java
+      app: userjava
   template:
     metadata:
       labels:
-        app: tripsinsights-user-java
+        app: userjava
     spec:
       nodeSelector:
         "kubernetes.io/os": linux
@@ -19,3 +19,17 @@ spec:
         image: registrylpg2295.azurecr.io/tripinsights/user-java:1.0
         ports: 
         - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: userjava-service
+spec:
+  type: ClusterIP
+  selector:
+    app: userjava
+  ports:
+  - protocol: TCP
+    name: http
+    port: 80
+    targetPort: 80
