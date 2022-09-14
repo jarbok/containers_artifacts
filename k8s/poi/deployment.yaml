@@ -1,0 +1,13 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tripsinsights-poi
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tripsinsights-poi
+  template:
+    metadata:
+      labels:
+        app: tripsinsights-poi
