@@ -1,21 +1,48 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: tripsinsights-userprofile
+  name: userprofile
+  labels:
+    deploy: userprofile
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: tripsinsights-userprofile
+      app: userprofile
   template:
     metadata:
       labels:
-        app: tripsinsights-userprofile
+        app: userprofile
     spec:
-      nodeSelector:
-        "kubernetes.io/os": linux
       containers:
-      - name: trips
-        image: registrylpg2295.azurecr.io/tripinsights/userprofile:1.0
-        ports: 
+      - image: 'registrylpg2295.azurecr.io/tripinsights/userprofile:1.0'
+        imagePullPolicy: Always
+        name: userprofile
+        ports:
         - containerPort: 80
+          name: http
+          protocol: TCP
+        env:
+        - name: SQL_DBNAME
+          value: 'mydrivingDB'
+        - name: SQL_USER
+          value: 'sqladminlPg2295'
+        - name: SQL_SERVER
+          value: 'sqlserverlpg2295.database.windows.net'
+        envFrom:
+        - secretRef:
+            name: sql
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: userprofile-service
+spec:
+  type: ClusterIP
+  selector:
+    app: userprofile
+  ports:
+  - protocol: TCP
+    name: http
+    port: 80
+    targetPort: 80
