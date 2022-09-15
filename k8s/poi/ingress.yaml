@@ -29,3 +29,10 @@ spec:
             name: poi-service
             port:
               number: 80
+      - path: /metrics
+        pathType: Prefix
+        backend:
+          service:
+            name: poi-service
+            port:
+              number: 80
