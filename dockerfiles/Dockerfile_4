@@ -22,7 +22,8 @@ ENV PORT="80" \
     SQL_SERVER="changeme.database.windows.net" \
     SQL_DBNAME="mydrivingDB" \
     OPENAPI_DOCS_URI="http://changeme" \
-    DEBUG_LOGGING="false"
+    ASPNETCORE_ENVIRONMENT="Development" \
+    DEBUG_LOGGING="true"
 
 # Metadata as defined in OCI image spec annotations - https://github.com/opencontainers/image-spec/blob/master/annotations.md
 LABEL org.opencontainers.image.title="Trip Insights - Trips API" \

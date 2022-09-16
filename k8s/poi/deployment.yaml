@@ -29,14 +29,14 @@ spec:
         - name: WEB_SERVER_BASE_URI
           value: 'http://0.0.0.0'
         - name: ASPNETCORE_ENVIRONMENT
-          value: 'Production'
+          value: 'Development'
         - name: SQL_USER
-          value: 'sqladmin'
+          value: 'sqladminlPg2295'
         - name: SQL_SERVER
           value: 'sqlserverlpg2295.database.windows.net'
         volumeMounts:
         - name: secrets-store-inline
-          mountPath: "/mnt/secrets-store"
+          mountPath: "/secrets"
           readOnly: true
       volumes:
         - name: secrets-store-inline

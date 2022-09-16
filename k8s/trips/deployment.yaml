@@ -23,14 +23,14 @@ spec:
         - containerPort: 80
           name: http
           protocol: TCP
-        env:
-        - name: SQL_USER
-          value: 'sqladmin'
-        - name: SQL_SERVER
-          value: 'sqlserverlpg2295.database.windows.net'
+        # env:
+        # - name: SQL_USER
+        #   value: 'sqladminlPg2295'
+        # - name: SQL_SERVER
+        #   value: 'sqlserverlpg2295.database.windows.net'
         volumeMounts:
         - name: secrets-store-inline
-          mountPath: "/mnt/secrets-store"
+          mountPath: "/secrets"
           readOnly: true
       volumes:
         - name: secrets-store-inline

@@ -25,9 +25,9 @@ spec:
               protocol: TCP
           env:
             - name: TRIPS_API_ENDPOINT
-              value: "http://trips-service"
+              value: "http://20.107.156.255"
             - name: USERPROFILE_API_ENDPOINT
-              value: "http://userprofile-service"
+              value: "http://20.107.156.255"
 ---
 apiVersion: v1
 kind: Service
